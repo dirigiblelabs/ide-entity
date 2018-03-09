@@ -110,44 +110,11 @@ function showProperties(graph, cell) {
 	wnd = showModalWindow(name, form.table, 240, 310);
 }
 
-function showQueryProperties(graph, cell) {
+function showEntityProperties(graph, cell) {
 	// Creates a form for the user object inside the cell
 	var form = new mxForm('properties');
 
-	// Adds a field for the columnname
-	var nameField = form.addTextarea('SQL', cell.value.name, 5);
-
-	var wnd = null;
-
-	// Defines the function to be executed when the
-	// OK button is pressed in the dialog
-	var okFunction = function() {
-		var clone = cell.value.clone();
-		
-		clone.name = nameField.value;
-		
-		graph.model.setValue(cell, clone);
-	
-		wnd.destroy();
-	};
-	
-	// Defines the function to be executed when the
-	// Cancel button is pressed in the dialog
-	var cancelFunction = function() {
-		wnd.destroy();
-	};
-	form.addButtons(okFunction, cancelFunction);
-
-	var parent = graph.model.getParent(cell);
-	var name = parent.value.name+'.'+cell.value.name;
-	wnd = showModalWindow(name, form.table, 240, 110);
-}
-
-function showStructureProperties(graph, cell) {
-	// Creates a form for the user object inside the cell
-	var form = new mxForm('properties');
-
-	// Adds a field for the table or view name
+	// Adds a field for the entity name
 	var name = cell.value.name;
 	var nameField = form.addText('Name', name);
 

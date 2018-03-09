@@ -1,35 +1,27 @@
-// Defines the column user object
-function Column(name) {
+// Defines the property user object
+function Property(name) {
 	this.name = name;
 }
 
-Column.prototype.type = 'VARCHAR';
-Column.prototype.columnLength = '20';
-Column.prototype.defaultValue = null;
-Column.prototype.primaryKey = false;
-Column.prototype.autoIncrement = false;
-Column.prototype.notNull = false;
-Column.prototype.unique = false;
-Column.prototype.precision = '';
-Column.prototype.scale = '';
+Property.prototype.type = 'VARCHAR';
+Property.prototype.columnLength = '20';
+Property.prototype.defaultValue = null;
+Property.prototype.primaryKey = false;
+Property.prototype.autoIncrement = false;
+Property.prototype.notNull = false;
+Property.prototype.unique = false;
+Property.prototype.precision = '';
+Property.prototype.scale = '';
 
-Column.prototype.clone = function() {
+Property.prototype.clone = function() {
 	return mxUtils.clone(this);
 };
 
-// Defines the table user object
-function Table(name) {
+// Defines the entity user object
+function Entity(name) {
 	this.name = name;
-};
+}
 
-Table.prototype.clone = function() {
-	return mxUtils.clone(this);
-};
-// Defines the view user object
-function View(name) {
-	this.name = name;
-};
-
-View.prototype.clone = function() {
+Entity.prototype.clone = function() {
 	return mxUtils.clone(this);
 };

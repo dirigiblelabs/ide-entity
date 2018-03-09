@@ -36,10 +36,10 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint) {
 		var parent = graph.getDefaultParent();
 		var model = graph.getModel();
 
-		var isTable = graph.isSwimlane(prototype);
+		var isEntity = graph.isSwimlane(prototype);
 		var name = null;				
 
-		if (!isTable) {
+		if (!isEntity) {
 			parent = cell;
 			var pstate = graph.getView().getState(parent);
 			
@@ -48,28 +48,21 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint) {
 				return;
 			}
 			
-			if (pstate.cell.value.type === "VIEW") {
-				showAlert('Drop', 'Drop target must be a table not a view');
-				return;
-			}
-			
 			pt.x -= pstate.x;
 			pt.y -= pstate.y;
 
 			var columnCount = graph.model.getChildCount(parent)+1;
-			//name = mxUtils.prompt('Enter name for new column', 'COLUMN'+columnCount);
-			showPrompt('Enter name for new column', 'COLUMN'+columnCount, createNode);
+			showPrompt('Enter name for new property', 'property'+columnCount, createNode);
 		} else {
-			var tableCount = 0;
+			var entitiesCount = 0;
 			var childCount = graph.model.getChildCount(parent);
 			
 			for (var i=0; i<childCount; i++) {
 				if (!graph.model.isEdge(graph.model.getChildAt(parent, i))) {
-					tableCount++;
+					entitiesCount++;
 				}
 			}
-			var prefix = prototype.value.name === "TABLENAME" ? "TABLE" : "VIEW";
-			showPrompt('Enter name for new table', prefix+(tableCount+1), createNode);
+			showPrompt('Enter name for new entity', 'Entity'+(entitiesCount+1), createNode);
 		}
 		
 		function createNode(name) {
@@ -84,12 +77,12 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint) {
 					
 					graph.addCell(v1, parent);
 					
-					if (isTable) {
+					if (isEntity) {
 						v1.geometry.alternateBounds = new mxRectangle(0, 0, v1.geometry.width, v1.geometry.height);
 						if (!v1.children[0].value.isSQL) {
-							v1.children[0].value.name = name+'_ID';
+							v1.children[0].value.name = name.toLowerCase()+'Id';
 						}
-						v1.value.type = prefix;
+						v1.value.type = 'Entity';
 					}
 				} finally {
 					model.endUpdate();
@@ -103,8 +96,8 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint) {
 	
 	var img = document.createElement('i');
 	img.setAttribute('class', 'fa fa-'+image+' fa-2x');
-	img.setAttribute('style', 'color: #111');
-//	img.color = '#337ab7';
+	img.setAttribute('style', 'color: #337ab7');
+	//img.color = '#337ab7';
 	img.title = hint;
 	sidebar.appendChild(img);
 	  					
@@ -112,7 +105,7 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint) {
 	var dragImage = img.cloneNode(true);
 	var ds = mxUtils.makeDraggable(img, graph, funct, dragImage);
 
-	// Adds highlight of target tables for columns
+	// Adds highlight of target entities for properties
 	ds.highlightDropTargets = true;
 	ds.getDropTarget = function(graph, x, y) {
 		if (graph.isSwimlane(prototype)) {
@@ -150,10 +143,10 @@ function configureStylesheet(graph) {
 	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
 	style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
-	style[mxConstants.STYLE_GRADIENTCOLOR] = '#111';//'#337ab7';
-	style[mxConstants.STYLE_FILLCOLOR] = '#111';//'#337ab7';
+	style[mxConstants.STYLE_GRADIENTCOLOR] = '#337ab7';
+	style[mxConstants.STYLE_FILLCOLOR] = '#337ab7';
 	style[mxConstants.STYLE_SWIMLANE_FILLCOLOR] = '#ffffff';
-	style[mxConstants.STYLE_STROKECOLOR] = '#000';//'#006292';
+	style[mxConstants.STYLE_STROKECOLOR] = '#006292';
 	style[mxConstants.STYLE_FONTCOLOR] = '#fff';
 	style[mxConstants.STYLE_STROKEWIDTH] = '2';
 	style[mxConstants.STYLE_STARTSIZE] = '28';
@@ -163,15 +156,15 @@ function configureStylesheet(graph) {
 	// Looks better without opacity if shadow is enabled
 	style[mxConstants.STYLE_OPACITY] = '80';
 	style[mxConstants.STYLE_SHADOW] = 1;
-	graph.getStylesheet().putCellStyle('table', style);
+	graph.getStylesheet().putCellStyle('entity', style);
 
 	style = graph.stylesheet.getDefaultEdgeStyle();
 	style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
-	style[mxConstants.STYLE_STROKECOLOR] = '#111';//'#337ab7';
+	style[mxConstants.STYLE_STROKECOLOR] = '#337ab7';
 	style[mxConstants.STYLE_STROKEWIDTH] = '2';
 	style[mxConstants.STYLE_ROUNDED] = true;
 	style[mxConstants.STYLE_EDGE] = mxEdgeStyle.EntityRelation;
-};
+}
 
 // Function to create the entries in the popupmenu
 function createPopupMenu(editor, graph, menu, cell, evt) {
@@ -198,10 +191,4 @@ function createPopupMenu(editor, graph, menu, cell, evt) {
 	menu.addItem('Redo', 'repeat', function() {
 		editor.execute('redo', cell);
 	});
-	
-	menu.addSeparator();
-	
-	menu.addItem('Show SQL', 'database', function() {
-		editor.execute('showSql', cell);
-	});	
-};
+}

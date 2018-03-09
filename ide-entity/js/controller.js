@@ -2,8 +2,8 @@
 // DOM node with the specified ID. This function is invoked
 // from the onLoad event handler of the document (see below).
 function main(container, outline, toolbar, sidebar, status) {
-	
-	// Load schema file
+
+	// Load model file
 	function getResource(resourcePath) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', resourcePath, false);
@@ -23,7 +23,7 @@ function main(container, outline, toolbar, sidebar, status) {
 	var searchParams = new URLSearchParams(window.location.search);
 	var file = searchParams.get('file');
 	var contents = loadContents(file);
-	
+
 	var messageHub = new FramesMessageHub();
 
 	function saveContents(text) {
@@ -44,8 +44,8 @@ function main(container, outline, toolbar, sidebar, status) {
 	}
 			
 	messageHub.subscribe(function(graph) {
-		var schema = createSchema(graph);
-		saveContents(schema);
+		var model = createModel(graph);
+		saveContents(model);
 	}, 'workbench.editor.save');
 	
 	
@@ -60,7 +60,7 @@ function main(container, outline, toolbar, sidebar, status) {
 		mxConstants.SHADOW_OFFSET_X = 0;
 		mxConstants.SHADOW_OFFSET_Y = 0;
 		
-		// Table icon dimensions and position
+		// Entity icon dimensions and position
 		mxSwimlane.prototype.imageSize = 20;
 		mxSwimlane.prototype.imageDx = 16;
 		mxSwimlane.prototype.imageDy = 4;
@@ -105,12 +105,12 @@ function main(container, outline, toolbar, sidebar, status) {
 		// Forces use of default edge in mxConnectionHandler
 		graph.connectionHandler.factoryMethod = null;
 
-		// Only tables are resizable
+		// Only entities are resizable
 		graph.isCellResizable = function(cell) {
 			return this.isSwimlane(cell);
 		};
 		
-		// Only tables are movable
+		// Only entities are movable
 		graph.isCellMovable = function(cell) {
 			return this.isSwimlane(cell);
 		};
@@ -122,7 +122,7 @@ function main(container, outline, toolbar, sidebar, status) {
 				getDocumentElement();
 		editor.configure(config);
 
-		// Configures the automatic layout for the table columns
+		// Configures the automatic layout for the entity properties
 		editor.layoutSwimlanes = true;
 		editor.createSwimlaneLayout = function() {
 			var layout = new mxStackLayout(this.graph, false);
@@ -147,7 +147,7 @@ function main(container, outline, toolbar, sidebar, status) {
 			return old;
 		};
 		
-		// Columns are dynamically created HTML labels
+		// Properties are dynamically created HTML labels
 		graph.isHtmlLabel = function(cell) {
 			return !this.isSwimlane(cell) &&
 				!this.model.isEdge(cell);
@@ -167,7 +167,7 @@ function main(container, outline, toolbar, sidebar, status) {
 			return mxGraph.prototype.convertValueToString.apply(this, arguments); // "supercall"
 		};
 				
-		// Returns the type as the tooltip for column cells
+		// Returns the type as the tooltip for property cells
 		graph.getTooltip = function(state) {
 			if (this.isHtmlLabel(state.cell)) {
 				return 'Type: '+state.cell.value.type;
@@ -181,7 +181,7 @@ function main(container, outline, toolbar, sidebar, status) {
 			return mxGraph.prototype.getTooltip.apply(this, arguments); // "supercall"
 		};
 		
-		// Creates a dynamic HTML label for column fields
+		// Creates a dynamic HTML label for property fields
 		graph.getLabel = function(cell) {
 			if (this.isHtmlLabel(cell)) {
 				var label = '';
@@ -237,56 +237,35 @@ function main(container, outline, toolbar, sidebar, status) {
 		// Adds all required styles to the graph (see below)
 		configureStylesheet(graph);
 
-		// Adds sidebar icon for the table object
-		var tableObject = new Table('TABLENAME');
-		var table = new mxCell(tableObject, new mxGeometry(0, 0, 200, 28), 'table');
+		// Adds sidebar icon for the entity object
+		var entityObject = new Entity('EntityName');
+		var entity = new mxCell(entityObject, new mxGeometry(0, 0, 200, 28), 'entity');
 		
-		table.setVertex(true);
-		addSidebarIcon(graph, sidebar, 	table, 'table', 'Drag this to the diagram to create a new Table');
+		entity.setVertex(true);
+		addSidebarIcon(graph, sidebar, 	entity, 'square-o', 'Drag this to the diagram to create a new Entity');
 		
-		// Adds sidebar icon for the column object
-		var columnObject = new Column('COLUMNNAME');
-		var column = new mxCell(columnObject, new mxGeometry(0, 0, 0, 26));
+		// Adds sidebar icon for the property object
+		var propertyObject = new Property('propertyName');
+		var property = new mxCell(propertyObject, new mxGeometry(0, 0, 0, 26));
 		
-		column.setVertex(true);
-		column.setConnectable(false);
+		property.setVertex(true);
+		property.setConnectable(false);
 
-		addSidebarIcon(graph, sidebar, 	column, 'columns', 'Drag this to a Table to create a new Column');
+		addSidebarIcon(graph, sidebar, 	property, 'minus-square-o', 'Drag this to a Entity to create a new Property');
 		
-		// Adds sidebar icon for the view object
-		var viewObject = new View('VIEWENAME');
-		var view = new mxCell(viewObject, new mxGeometry(0, 0, 200, 28), 'table');
+		// Adds primary key field into entity
+		var firstProperty = property.clone();
 		
-		view.setVertex(true);
-		addSidebarIcon(graph, sidebar, 	view, 'th-large', 'Drag this to the diagram to create a new View');
+		firstProperty.value.name = 'entityNameId';
+		firstProperty.value.type = 'INTEGER';
+		firstProperty.value.columnLength = 0;
+		firstProperty.value.primaryKey = true;
+		firstProperty.value.autoIncrement = true;
 		
-		// Adds primary key field into table
-		var firstColumn = column.clone();
+		entity.insert(firstProperty);
 		
-		firstColumn.value.name = 'TABLENAME_ID';
-		firstColumn.value.type = 'INTEGER';
-		firstColumn.value.columnLength = 0;
-		firstColumn.value.primaryKey = true;
-		firstColumn.value.autoIncrement = true;
-		
-		table.insert(firstColumn);
-		
-		// Adds sql field into view
-		var sqlColumn = column.clone();
-		
-		sqlColumn.value.name = 'SELECT ...';
-		sqlColumn.value.isSQL = true;
-		
-		view.insert(sqlColumn);
-		
-		// Adds child columns for new connections between tables
+		// Adds child properties for new connections between entities
 		graph.addEdge = function(edge, parent, source, target, index) {
-			// check whether the source is view
-			if (source.value.type === 'VIEW') {
-				showAlert('Drop', 'Source must be a Table not a View');
-				return;
-			}
-			
 			// Finds the primary key child of the target table
 			var primaryKey = null;
 			var childCount = this.model.getChildCount(target);
@@ -301,19 +280,19 @@ function main(container, outline, toolbar, sidebar, status) {
 			}
 			
 			if (primaryKey === null) {
-				showAlert('Drop', 'Target Table must have a Primary Key');
+				showAlert('Drop', 'Target Entity must have a Primary Key');
 				return;
 			}
 		
 			this.model.beginUpdate();
 			try {
-				var col1 = this.model.cloneCell(column);
-				col1.value.name = primaryKey.value.name;
-				col1.value.type = primaryKey.value.type;
-				col1.value.columnLength = primaryKey.value.columnLength;
+				var prop1 = this.model.cloneCell(property);
+				prop1.value.name = primaryKey.value.name;
+				prop1.value.type = primaryKey.value.type;
+				prop1.value.columnLength = primaryKey.value.columnLength;
 			
-				this.addCell(col1, source);
-				source = col1;				
+				this.addCell(prop1, source);
+				source = prop1;				
 				target = primaryKey;
 				
 				return mxGraph.prototype.addEdge.apply(this, arguments); // "supercall"
@@ -330,15 +309,15 @@ function main(container, outline, toolbar, sidebar, status) {
 
 		addToolbarButton(editor, toolbar, 'save', 'Save', 'save', true);
 
-		// Defines a new export action
+		// Defines a new save action
 		editor.addAction('save', function(editor, cell) {
-			var schema = createSchema(graph);
-			saveContents(schema);
+			var model = createModel(graph);
+			saveContents(model);
 		});
 		
 		addToolbarButton(editor, toolbar, 'properties', 'Properties', 'list-ul', true);
 
-		// Defines a new export action
+		// Defines a new properties action
 		editor.addAction('properties', function(editor, cell) {
 
 			if (!cell) {
@@ -347,24 +326,24 @@ function main(container, outline, toolbar, sidebar, status) {
 			
 			if (graph.isHtmlLabel(cell)) {
 				if (cell) {
-					// assume column
+					// assume property
 					if (cell.value.isSQL) {
-						// assume View's (the only) column
+						// assume View's (the only) property
 						showQueryProperties(graph, cell);
 					} else {
-						// assume Table's column
+						// assume Entity's property
 						showProperties(graph, cell);
 					}
 				} else {
-					showAlert('Error', 'Select a column');
+					showAlert('Error', 'Select a property');
 				}
 			} else {
-				// assume Table, View or Connector
+				// assume Entity or Connector
 				if (cell.value) {
-					// assume Table or View
-					showStructureProperties(graph, cell);
+					// assume Entity
+					showEntityProperties(graph, cell);
 				} else {
-					// assume connector
+					// assume Connector
 					showConnectorProperties(graph, cell);
 				}
 				
@@ -384,37 +363,6 @@ function main(container, outline, toolbar, sidebar, status) {
 		addToolbarButton(editor, toolbar, 'print', 'Print', 'print', true);
 		
 		toolbar.appendChild(spacer.cloneNode(true));
-
-		// Defines a create SQK action
-		editor.addAction('showSql', function(editor, cell) {
-			var sql = createSql(graph);
-			
-			if (sql.length > 0) {
-				var textarea = document.createElement('textarea');
-				textarea.style.width = '410px';
-				textarea.style.height = '420px';
-				
-				textarea.value = sql;
-				showModalWindow('SQL', textarea, 410, 440);
-			} else {
-				showAlert('Warning', 'Schema is empty');
-			}
-		});
-
-		addToolbarButton(editor, toolbar, 'showSql', 'Show SQL', 'database', true);
-
-		// Defines export XML action
-		editor.addAction('export', function(editor, cell) {
-			var textarea = document.createElement('textarea');
-			textarea.style.width = '410px';
-			textarea.style.height = '420px';
-			var enc = new mxCodec(mxUtils.createXmlDocument());
-			var node = enc.encode(editor.graph.getModel());
-			textarea.value = mxUtils.getPrettyXml(node);
-			showModalWindow('XML', textarea, 410, 440);
-		});
-
-		//addToolbarButton(editor, toolbar, 'export', 'Export XML', 'download', true);
 		
 		// Adds toolbar buttons into the status bar at the bottom
 		// of the window.
@@ -449,5 +397,5 @@ function main(container, outline, toolbar, sidebar, status) {
 	var doc = mxUtils.parseXml(contents);
 	var codec = new mxCodec(doc.mxGraphModel);
 	codec.decode(doc.documentElement.getElementsByTagName('mxGraphModel')[0], graph.getModel());
-};
+}
 		
