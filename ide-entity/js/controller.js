@@ -225,8 +225,8 @@ function main(container, outline, toolbar, sidebar, status) {
 					label += '<img src="../resources/mxgraph/3.9.1/images/spacer.gif" width="9" height="1">&nbsp;';
 				}
 
-				var suffix = ': '+mxUtils.htmlEntities(cell.value.dataType, false)+(cell.value.dataColumnLength ? 
-							'('+cell.value.dataColumnLength+')' : '');
+				var suffix = ': '+mxUtils.htmlEntities(cell.value.dataType, false)+(cell.value.dataLength ? 
+							'('+cell.value.dataLength+')' : '');
 				return label+mxUtils.htmlEntities(cell.value.name, false) + ":" + suffix;
 			}
 			
@@ -281,10 +281,10 @@ function main(container, outline, toolbar, sidebar, status) {
 		var firstProperty = property.clone();
 		
 		firstProperty.value.name = 'entityNameId';
-		firstProperty.value.type = 'INTEGER';
-		firstProperty.value.columnLength = 0;
-		firstProperty.value.primaryKey = true;
-		firstProperty.value.autoIncrement = true;
+		firstProperty.value.dataType = 'INTEGER';
+		firstProperty.value.dataLength = 0;
+		firstProperty.value.dataPrimaryKey = true;
+		firstProperty.value.dataAutoIncrement = true;
 		
 		entity.insert(firstProperty);
 		
@@ -297,7 +297,7 @@ function main(container, outline, toolbar, sidebar, status) {
 			for (var i=0; i < childCount; i++) {
 				var child = this.model.getChildAt(target, i);
 				
-				if (child.value.primaryKey) {
+				if (child.value.dataPrimaryKey) {
 					primaryKey = child;
 					break;
 				}
@@ -312,8 +312,8 @@ function main(container, outline, toolbar, sidebar, status) {
 			try {
 				var prop1 = this.model.cloneCell(property);
 				prop1.value.name = primaryKey.value.name;
-				prop1.value.type = primaryKey.value.type;
-				prop1.value.columnLength = primaryKey.value.columnLength;
+				prop1.value.dataType = primaryKey.value.dataType;
+				prop1.value.dataLength = primaryKey.value.dataLength;
 			
 				this.addCell(prop1, source);
 				source = prop1;				
