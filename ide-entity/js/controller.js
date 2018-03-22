@@ -211,24 +211,23 @@ function main(container, outline, toolbar, sidebar, status) {
 			if (this.isHtmlLabel(cell)) {
 				var label = '';
 				
-				if (cell.value.primaryKey) {
+				if (cell.value.dataPrimaryKey) {
 					label += '<i title="Primary Key" class="fa fa-key" width="16" height="16" align="top"></i>&nbsp;';
 				} else {
 					label += '<img src="../resources/mxgraph/3.9.1/images/spacer.gif" width="9" height="1">&nbsp;';
 				}
 										
-				if (cell.value.autoIncrement) {
+				if (cell.value.dataAutoIncrement) {
 					label += '<i title="Auto Increment" class="fa fa-plus" width="16" height="16" align="top"></i>&nbsp;';
-				} else if (cell.value.unique) {
+				} else if (cell.value.dataUnique) {
 					label += '<i title="Unique" class="fa fa-check" width="16" height="16" align="top"></i>&nbsp;';
 				} else {
 					label += '<img src="../resources/mxgraph/3.9.1/images/spacer.gif" width="9" height="1">&nbsp;';
 				}
 
-				var suffix = ': '+mxUtils.htmlEntities(cell.value.type, false)+(cell.value.columnLength ? 
-							'('+cell.value.columnLength+')' : '');
-				suffix = cell.value.isSQL ? '' : suffix;
-				return label+mxUtils.htmlEntities(cell.value.name, false)+suffix;
+				var suffix = ': '+mxUtils.htmlEntities(cell.value.dataType, false)+(cell.value.dataColumnLength ? 
+							'('+cell.value.dataColumnLength+')' : '');
+				return label+mxUtils.htmlEntities(cell.value.name, false) + ":" + suffix;
 			}
 			
 			return mxGraph.prototype.getLabel.apply(this, arguments); // "supercall"
