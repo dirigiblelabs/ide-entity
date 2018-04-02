@@ -2,6 +2,7 @@
 // DOM node with the specified ID. This function is invoked
 // from the onLoad event handler of the document (see below).
 function main(container, outline, toolbar, sidebar, status) {
+	var $scope = $('#ModelerCtrl').scope();
 
 	// Load model file
 	function getResource(resourcePath) {
@@ -116,6 +117,9 @@ function main(container, outline, toolbar, sidebar, status) {
 		var editor = new mxEditor();
 		var graph = editor.graph;
 		var model = graph.model;
+		
+		$scope.$parent.editor = editor;
+		$scope.$parent.graph = graph;
 		
 		// Disables some global features
 		graph.setConnectable(true);
@@ -330,6 +334,20 @@ function main(container, outline, toolbar, sidebar, status) {
 		var spacer = document.createElement('div');
 		spacer.style.display = 'inline';
 		spacer.style.padding = '8px';
+		
+		
+		addToolbarButton(editor, toolbar, 'test', 'Test', 'wrench', true);
+
+		// Defines a new test action
+		editor.addAction('test', function(editor, cell) {
+			if (!cell) {
+				cell = graph.getSelectionCell();
+			}
+			$scope.$parent.cell = cell;
+			$scope.$apply();
+			$('#entityPropertiesOpen').click();
+		});
+		
 
 		addToolbarButton(editor, toolbar, 'save', 'Save', 'save', true);
 
