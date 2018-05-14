@@ -127,8 +127,8 @@ function createModelJson(graph) {
 			var relationName = child.name ? child.name : child.source.parent.value.name+'_'+ child.target.parent.value.name;
 			child.source.value.relationshipName = relationName;
 			child.source.value.relationshipEntityName = child.target.parent.value.name;
-			child.source.value.widgetDropDownKey = child.target.value.name;
-			child.source.value.widgetDropDownValue = child.target.value.name;
+			child.source.value.widgetDropDownKey = child.source.value.widgetDropDownKey ? child.source.value.widgetDropDownKey : child.target.value.name;
+			child.source.value.widgetDropDownValue = child.source.value.widgetDropDownValue ? child.source.value.widgetDropDownValue : child.target.value.name;
 		}
 	}
 
