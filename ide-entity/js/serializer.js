@@ -169,8 +169,8 @@ function createModelJson(graph) {
 					property.dataScale = childProperty.dataScale;
 					
 					// Relationship Properties
-					property.relationshipType = childProperty.relationshipType ? childProperty.relationshipType : 'ASSOCIATION';
-					property.relationshipCardinality = childProperty.relationshipCardinality ? childProperty.relationshipCardinality : '1_n';
+					property.relationshipType = childProperty.relationshipType;
+					property.relationshipCardinality = childProperty.relationshipCardinality;
 					property.relationshipName = childProperty.relationshipName;
 					property.relationshipEntityName = childProperty.relationshipEntityName;
 					
