@@ -34,7 +34,7 @@ function createModel(graph) {
 						model.push(' dataPrimaryKey="true"');
 					}
 					if (property.dataAutoIncrement) {
-						model.push(' dataIdentity="true"');
+						model.push(' dataAutoIncrement="true"');
 					}
 					if (property.dataUnique) {
 						model.push(' dataUnique="true"');
