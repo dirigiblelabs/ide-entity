@@ -140,7 +140,7 @@ function createModelJson(graph) {
 			var entity = {};
 			entity.name = child.value.name;
 			entity.dataName = child.value.dataName ? child.value.dataName : JSON.stringify(child.value.name).replace(/\W/g, '').toUpperCase();
-			entity.isPrimary = child.value.isPrimary;
+			entity.isPrimary = child.value.isPrimary ? child.value.isPrimary : false;
 			entity.menuKey = child.value.menuKey ? child.value.menuKey : JSON.stringify(child.value.name).replace(/\W/g, '').toLowerCase();
 			entity.menuLabel = child.value.menuLabel ? child.value.menuLabel : child.value.name;
 			entity.menuIndex = child.value.menuIndex ? child.value.menuIndex : 100;
