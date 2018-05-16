@@ -380,7 +380,7 @@
 					<div class="row">
 					    <label class="col-xs-3 col-form-label" for="relationshipCardinality">Relationship Cardinality: </label>
 					    <div class="col-xs-4">
-						    <select class="col-xs-4" name="d" id="relationshipCardinality" ng-model="ctrl.$scope.$parent.cell.value.relationshipCardinality">
+						    <select class="col-xs-4" name="d" id="relationshipCardinality" ng-model="ctrl.$scope.$parent.cell.source.value.relationshipCardinality">
 						    	<option ng-repeat="option in ctrl.relationshipCardinalities" value="{{option.key}}">{{option.label}}</option>
 						    </select>
 						</div>
