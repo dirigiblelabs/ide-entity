@@ -61,6 +61,11 @@ angular.module('ui.entity-data.modeler').controller('ModelerCtrl', function ($ui
 		{"key":"1_1","label":"one-to-one"},
 		{"key":"1_n","label":"one-to-many"}
 	];
+	
+	ctrl.isPrimaryTypes = [
+		{"key":"true","label":"Primary Entity"},
+		{"key":"false","label":"Dependent Entity"}
+	];
 
 	// Save Entity's properties
 	ctrl.okEntityProperties = function() {
