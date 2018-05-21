@@ -66,6 +66,11 @@ angular.module('ui.entity-data.modeler').controller('ModelerCtrl', function ($ui
 		{"key":"true","label":"Primary Entity"},
 		{"key":"false","label":"Dependent Entity"}
 	];
+	
+	ctrl.isMajorTypes = [
+		{"key":"true","label":"Show in table header"},
+		{"key":"false","label":"Show in form only"}
+	];
 
 	// Save Entity's properties
 	ctrl.okEntityProperties = function() {
