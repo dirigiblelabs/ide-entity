@@ -7,11 +7,15 @@ angular.module('ui.entity-data.modeler').controller('ModelerCtrl', function ($ui
 
 	ctrl.layoutTypes = [
 		{"key":"MANAGE","label":"Manage Entities"},
-		{"key":"LIST","label":"List Entities"},
 		{"key":"MANAGE_MASTER","label":"Manage Master Entities"},
-		{"key":"LIST_MASTER","label":"List Master Entities"},
 		{"key":"MANAGE_DETAILS","label":"Manage Details Entities"},
-		{"key":"LIST_DETAILS","label":"List Details Entities"}
+		{"key":"LIST","label":"List Entities"},
+		{"key":"LIST_MASTER","label":"List Master Entities"},
+		{"key":"LIST_DETAILS","label":"List Details Entities"},
+		{"key":"REPORT_TABLE","label":"Report in a Table Format"},
+		{"key":"REPORT_BAR","label":"Report in a Bar Chart Format"},
+		{"key":"REPORT_LINE","label":"Report in a Line Chart Format"},
+		{"key":"REPORT_PIE","label":"Report in a Pie Chart Format"}
 	];
 	
 	ctrl.dataTypes = [
