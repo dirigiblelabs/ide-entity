@@ -62,9 +62,10 @@ angular.module('ui.entity-data.modeler').controller('ModelerCtrl', function ($ui
 		{"key":"1_n","label":"one-to-many"}
 	];
 	
-	ctrl.isPrimaryTypes = [
-		{"key":"true","label":"Primary Entity"},
-		{"key":"false","label":"Dependent Entity"}
+	ctrl.entityTypes = [
+		{"key":"PRIMARY","label":"Primary Entity"},
+		{"key":"DEPENDENT","label":"Dependent Entity"},
+		{"key":"REPORT","label":"Report Entity"}
 	];
 	
 	ctrl.isMajorTypes = [
