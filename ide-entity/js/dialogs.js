@@ -8,7 +8,6 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-
 function showAlert(title, message, $scope) {
 	$scope.$parent.alertTitle = title;
 	$scope.$parent.alertStatus = 'warning';
