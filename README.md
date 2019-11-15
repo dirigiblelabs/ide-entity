@@ -9,7 +9,7 @@ Entity Data Modeler Plugin for the [Eclipse Dirigible](https://github.com/eclips
 
 Build the [Eclipse Dirigible](https://github.com/eclipse/dirigible), deploy on e.g. Tomcat Web Container and go to location:
 
-> http://localhost:8080/services/v3/web/ide-entity/modeler.html
+> http://localhost:8080/services/v4/web/ide-entity/modeler.html
 
 ## License
 
