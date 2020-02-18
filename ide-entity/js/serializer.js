@@ -25,7 +25,7 @@ function createModel(graph) {
 			child.value.tooltip = child.value.tooltip ? child.value.tooltip : child.value.name;
 			child.value.menuKey = child.value.menuKey ? child.value.menuKey : JSON.stringify(child.value.name).replace(/\W/g, '').toLowerCase();
 			child.value.menuLabel = child.value.menuLabel ? child.value.menuLabel : child.value.name;
-			model.push('  <entity name="'+_.escape(child.value.name)+
+			var entityContent = '  <entity name="'+_.escape(child.value.name)+
 				'" dataName="'+_.escape(child.value.dataName)+
 				'" dataCount="'+_.escape(child.value.dataCount)+
 				'" dataQuery="'+_.escape(child.value.dataQuery)+
@@ -39,8 +39,25 @@ function createModel(graph) {
 				'" layoutType="'+_.escape(child.value.layoutType)+
 				'" perspectiveName="'+_.escape(child.value.perspectiveName)+
 				'" perspectiveIcon="'+_.escape(child.value.perspectiveIcon)+
-				'" perspectiveOrder="'+_.escape(child.value.perspectiveOrder)+
-				'">\n');
+				'" perspectiveOrder="'+_.escape(child.value.perspectiveOrder) + '"';
+
+				if (child.value.feedUrl) {					
+					entityContent += ' feedUrl="'+ btoa(child.value.feedUrl) + '"';
+				}
+				if (child.value.feedUsername) {					
+					entityContent += ' feedUrl="'+ btoa(child.value.feedUsername) + '"';
+				}
+				if (child.value.feedPassword) {					
+					entityContent += ' feedUrl="'+ btoa(child.value.feedPassword) + '"';
+				}
+				if (child.value.feedSchedule) {					
+					entityContent += ' feedUrl="'+ btoa(child.value.feedSchedule) + '"';
+				}
+				if (child.value.feedPath) {					
+					entityContent += ' feedUrl="'+ btoa(child.value.feedPath) + '"';
+				}
+				entityContent += '>\n';
+			model.push(entityContent);
 			
 			var propertyCount = graph.model.getChildCount(child);
 			if (propertyCount > 0) {
@@ -147,7 +164,7 @@ function createModelJson(graph) {
 	var parent = graph.getDefaultParent();
 	var childCount = graph.model.getChildCount(parent);
 	var compositions = {};
-	
+
 	for (var i=0; i<childCount; i++) {
 		var child = graph.model.getChildAt(parent, i);
 		if (graph.model.isEdge(child)) {
@@ -158,6 +175,7 @@ function createModelJson(graph) {
 			child.source.value.relationshipEntityPerspectiveName = _.escape(child.target.parent.value.perspectiveName);
 			child.source.value.widgetDropDownKey = _.escape(child.source.value.widgetDropDownKey ? child.source.value.widgetDropDownKey : child.target.value.name);
 			child.source.value.widgetDropDownValue = _.escape(child.source.value.widgetDropDownValue ? child.source.value.widgetDropDownValue : child.target.value.name);
+			child.source.value.feedPropertyName = _.escape(child.target.parent.value.feedPropertyName);
 			
 			if (child.source.value.relationshipType === 'COMPOSITION') {
 				var composition = {};
@@ -191,6 +209,11 @@ function createModelJson(graph) {
 			entity.perspectiveName = _.escape(child.value.perspectiveName);
 			entity.perspectiveIcon = _.escape(child.value.perspectiveIcon);
 			entity.perspectiveOrder = _.escape(child.value.perspectiveOrder);
+			entity.feedUrl = child.value.feedUrl ? btoa(child.value.feedUrl) : null;
+			entity.feedUsername = child.value.feedUsername ? btoa(child.value.feedUsername) : _.escape(null);
+			entity.feedPassword = child.value.feedPassword ? btoa(child.value.feedPassword) : _.escape(null);
+			entity.feedSchedule = child.value.feedSchedule ? btoa(child.value.feedSchedule) : _.escape(null);
+			entity.feedPath = _.escape(child.value.feedPath);
 			entity.properties = [];
 			
 			if (compositions[entity.name]) {
@@ -237,6 +260,7 @@ function createModelJson(graph) {
 					property.widgetIsMajor = childProperty.widgetIsMajor ? childProperty.widgetIsMajor : "false";
 					property.widgetDropDownKey = _.escape(childProperty.widgetDropDownKey);
 					property.widgetDropDownValue = _.escape(childProperty.widgetDropDownValue);
+					property.feedPropertyName = _.escape(childProperty.feedPropertyName);
 					
 					entity.properties.push(property);
 				}
