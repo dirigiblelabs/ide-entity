@@ -41,20 +41,23 @@ function createModel(graph) {
 				'" perspectiveIcon="'+_.escape(child.value.perspectiveIcon)+
 				'" perspectiveOrder="'+_.escape(child.value.perspectiveOrder) + '"';
 
-				if (child.value.feedUrl) {					
-					entityContent += ' feedUrl="'+ btoa(child.value.feedUrl) + '"';
+				if (child.value.feedUrl) {
+					child.value.feedUrl = btoa(child.value.feedUrl);
+					entityContent += ' feedUrl="'+ child.value.feedUrl + '"';
 				}
-				if (child.value.feedUsername) {					
-					entityContent += ' feedUrl="'+ btoa(child.value.feedUsername) + '"';
+				if (child.value.feedUsername) {
+					child.value.feedUsername = btoa(child.value.feedUsername);
+					entityContent += ' feedUsername="'+ child.value.feedUsername + '"';
 				}
-				if (child.value.feedPassword) {					
-					entityContent += ' feedUrl="'+ btoa(child.value.feedPassword) + '"';
+				if (child.value.feedPassword) {
+					child.value.feedPassword = btoa(child.value.feedPassword);
+					entityContent += ' feedPassword="'+ child.value.feedPassword + '"';
 				}
 				if (child.value.feedSchedule) {					
-					entityContent += ' feedUrl="'+ btoa(child.value.feedSchedule) + '"';
+					entityContent += ' feedSchedule="'+ child.value.feedSchedule + '"';
 				}
 				if (child.value.feedPath) {					
-					entityContent += ' feedUrl="'+ btoa(child.value.feedPath) + '"';
+					entityContent += ' feedPath="'+ child.value.feedPath + '"';
 				}
 				entityContent += '>\n';
 			model.push(entityContent);
@@ -129,6 +132,9 @@ function createModel(graph) {
 					if (property.widgetIsMajor) {
 						model.push(' widgetIsMajor="true"');
 					}
+					if (property.feedPropertyName !== null) {
+						model.push(' feedPropertyName="'+_.escape(property.feedPropertyName)+'"');
+					}
 					
 					model.push('></property>\n');
 				}
@@ -153,7 +159,24 @@ function createModel(graph) {
 	var mxGraph = mxUtils.getXml(node);
 	model.push(' '+mxGraph);
 	model.push('\n</model>');
-	
+
+	for (var i=0; i<childCount; i++) {
+		var child = graph.model.getChildAt(parent, i);
+		
+		if (!graph.model.isEdge(child)) {
+
+			if (child.value.feedUrl) {
+				child.value.feedUrl = atob(child.value.feedUrl);
+			}
+			if (child.value.feedUsername) {
+				child.value.feedUsername = atob(child.value.feedUsername);
+			}
+			if (child.value.feedPassword) {
+				child.value.feedPassword = atob(child.value.feedPassword);
+			}
+		}
+	}
+				
 	return model.join('');
 }
 
@@ -210,10 +233,10 @@ function createModelJson(graph) {
 			entity.perspectiveIcon = _.escape(child.value.perspectiveIcon);
 			entity.perspectiveOrder = _.escape(child.value.perspectiveOrder);
 			entity.feedUrl = child.value.feedUrl ? btoa(child.value.feedUrl) : null;
-			entity.feedUsername = child.value.feedUsername ? btoa(child.value.feedUsername) : _.escape(null);
-			entity.feedPassword = child.value.feedPassword ? btoa(child.value.feedPassword) : _.escape(null);
-			entity.feedSchedule = child.value.feedSchedule ? btoa(child.value.feedSchedule) : _.escape(null);
-			entity.feedPath = _.escape(child.value.feedPath);
+			entity.feedUsername = child.value.feedUsername ? btoa(child.value.feedUsername) : null;
+			entity.feedPassword = child.value.feedPassword ? btoa(child.value.feedPassword) : null;
+			entity.feedSchedule = child.value.feedSchedule ? _.escape(child.value.feedSchedule) : null;
+			entity.feedPath = child.value.feedPath ? _.escape(child.value.feedPath) : null;
 			entity.properties = [];
 			
 			if (compositions[entity.name]) {
@@ -260,6 +283,8 @@ function createModelJson(graph) {
 					property.widgetIsMajor = childProperty.widgetIsMajor ? childProperty.widgetIsMajor : "false";
 					property.widgetDropDownKey = _.escape(childProperty.widgetDropDownKey);
 					property.widgetDropDownValue = _.escape(childProperty.widgetDropDownValue);
+
+					// Feed Properties
 					property.feedPropertyName = _.escape(childProperty.feedPropertyName);
 					
 					entity.properties.push(property);
