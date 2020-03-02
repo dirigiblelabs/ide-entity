@@ -10,6 +10,7 @@
  */
 function addToolbarButton(editor, toolbar, action, label, image, isTransparent) {
 	var button = document.createElement('button');
+	button.title = label;
 	// button.style.fontSize = '10';
 	if (image !== null) {
 		var img = document.createElement('i');
