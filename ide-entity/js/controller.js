@@ -22,6 +22,7 @@ function main(container, outline, toolbar, sidebar, status) {
         xhr.setRequestHeader('X-CSRF-Token', 'Fetch');
         xhr.send();
         if (xhr.status === 200) {
+        	csrfToken = xhr.getResponseHeader("x-csrf-token");
         	return xhr.responseText;
         }
 	}
