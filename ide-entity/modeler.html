@@ -377,7 +377,7 @@
 			      	<div class="row">
 					    <label class="col-xs-3 col-form-label" for="widgetType">Widget Type: </label>
 					    <div class="col-xs-4">
-						    <select class="col-xs-4" name="d" id="widgetType" ng-model="ctrl.$scope.$parent.cell.value.widgetType">
+						    <select class="form-control col-xs-4" name="d" id="widgetType" ng-model="ctrl.$scope.$parent.cell.value.widgetType">
 						    	<option ng-repeat="option in ctrl.widgetTypes" value="{{option.key}}">{{option.label}}</option>
 						    </select>
 						</div>
@@ -493,7 +493,7 @@
 					<div class="row">
 					    <label class="col-xs-3 col-form-label" for="relationshipType">Relationship Type: </label>
 					    <div class="col-xs-4">
-						    <select class="col-xs-4" name="d" id="relationshipType" ng-model="ctrl.$scope.$parent.cell.source.value.relationshipType">
+						    <select class="form-control col-xs-4" name="d" id="relationshipType" ng-model="ctrl.$scope.$parent.cell.source.value.relationshipType">
 						    	<option ng-repeat="option in ctrl.relationshipTypes" value="{{option.key}}">{{option.label}}</option>
 						    </select>
 						</div>
@@ -501,7 +501,7 @@
 					<div class="row">
 					    <label class="col-xs-3 col-form-label" for="relationshipCardinality">Relationship Cardinality: </label>
 					    <div class="col-xs-4">
-						    <select class="col-xs-4" name="d" id="relationshipCardinality" ng-model="ctrl.$scope.$parent.cell.source.value.relationshipCardinality">
+						    <select class="form-control col-xs-4" name="d" id="relationshipCardinality" ng-model="ctrl.$scope.$parent.cell.source.value.relationshipCardinality">
 						    	<option ng-repeat="option in ctrl.relationshipCardinalities" value="{{option.key}}">{{option.label}}</option>
 						    </select>
 						</div>
