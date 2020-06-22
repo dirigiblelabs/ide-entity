@@ -1,5 +1,5 @@
 var transformer = require("ide-entity/template/transform-edm");
-var workspaceManager = require("workspace/v4/manager");
+var workspaceManager = require("platform/v4/workspace");
 
 var workspace = __context.get('workspace');
 var project = __context.get('project');
