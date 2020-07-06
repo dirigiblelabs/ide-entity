@@ -340,7 +340,11 @@ function main(container, outline, toolbar, sidebar, status) {
 			this.model.beginUpdate();
 			try {
 				var prop1 = this.model.cloneCell(property);
-				prop1.value.name = primaryKey.value.name;
+				if (target.style && target.style.startsWith('projection')) {
+					prop1.value.name = primaryKey.parent.value.projectionReferencedEntity + primaryKey.value.name;
+				} else {
+					prop1.value.name = primaryKey.value.name;
+				}
 				prop1.value.dataType = primaryKey.value.dataType;
 				prop1.value.dataLength = primaryKey.value.dataLength;
 			
@@ -359,7 +363,19 @@ function main(container, outline, toolbar, sidebar, status) {
 		var projection = new mxCell(projectionObject, new mxGeometry(0, 0, 200, 28), 'projection');
 				
 		projection.setVertex(true);
-		addSidebarIcon(graph, sidebar, 	projection, 'external-link', 'Drag this to the diagram to create a reference to an Entity', $scope);
+		addSidebarIcon(graph, sidebar, 	projection, 'external-link', 'Drag this to the diagram to create a reference to an Entity from external', $scope);
+
+		// Adds primary key field into projection entity
+		var keyProperty = property.clone();
+		
+		keyProperty.value.name = 'Id';
+		keyProperty.value.dataType = 'INTEGER';
+		keyProperty.value.dataLength = 0;
+		keyProperty.value.dataPrimaryKey = 'true';
+		keyProperty.value.dataAutoIncrement = 'true';
+		keyProperty.style = 'projectionproperty';
+		
+		projection.insert(keyProperty);
 		
 
 		// Creates a new DIV that is used as a toolbar and adds

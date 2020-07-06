@@ -81,7 +81,7 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint, $scope) {
 				}
 			}
 			//showPrompt('Enter name for new entity', 'Entity'+(entitiesCount+1), createNode);
-			createNode('Entity'+(entitiesCount+1));
+			createNode('Entity'+(entitiesCount+1), prototype.style === 'projection');
 
 			if (prototype.style === 'projection') {
 				$scope.$cell = graph.getSelectionCell();
@@ -89,7 +89,7 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint, $scope) {
 			}
 		}
 		
-		function createNode(name) {
+		function createNode(name, isProjection) {
 			if (name !== null) {
 				var v1 = model.cloneCell(prototype);
 
@@ -103,11 +103,20 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint, $scope) {
 					
 					if (isEntity) {
 						v1.geometry.alternateBounds = new mxRectangle(0, 0, v1.geometry.width, v1.geometry.height);
-						if (v1.children && v1.children.length > 0) {
-							if (!v1.children[0].value.isSQL) {
-								v1.children[0].value.name = name.toLowerCase()+'Id';
+						if (!isProjection) {	
+							if (v1.children && v1.children.length > 0) {
+								if (!v1.children[0].value.isSQL) {
+									v1.children[0].value.name = name.toLowerCase()+'Id';
+								}
+							}
+						} else {
+							if (v1.children && v1.children.length > 0) {
+								if (!v1.children[0].value.isSQL) {
+									v1.children[0].value.name = 'Id';
+								}
 							}
 						}
+						
 						v1.value.type = 'Entity';
 					}
 				} finally {
