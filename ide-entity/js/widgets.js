@@ -81,11 +81,16 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint, $scope) {
 				}
 			}
 			//showPrompt('Enter name for new entity', 'Entity'+(entitiesCount+1), createNode);
-			createNode('Entity'+(entitiesCount+1), prototype.style === 'projection');
+			createNode('Entity'+(entitiesCount+1), prototype.style === 'projection', prototype.style === 'extension');
 
 			if (prototype.style === 'projection') {
 				$scope.$cell = graph.getSelectionCell();
 				openReferEntity('Drop', 'Will be creating a Projection Entity', $scope, graph);
+			}
+
+			if (prototype.style === 'extension') {
+				$scope.$cell = graph.getSelectionCell();
+				$scope.$cell.value.entityType = "EXTENSION";
 			}
 		}
 		
@@ -99,6 +104,10 @@ function addSidebarIcon(graph, sidebar, prototype, image, hint, $scope) {
 					v1.geometry.x = pt.x;
 					v1.geometry.y = pt.y;
 
+					if (isEntity && isExtension) {
+						v1.style = 'extension';
+						v1.value.entityType = "EXTENSION";
+					}
 					if (!isEntity && isExtension) {
 						v1.style = 'extensionproperty';
 					}
