@@ -207,7 +207,7 @@
 					<div class="row">
 						<label class="col-xs-3 col-form-label">Perspective Name: </label>
 						<div class="col-xs-5">
-							<input class="form-control" type="text" placeholder="perspective name" ng-model="ctrl.$scope.$parent.cell.value.perspectiveName" required="required" pattern="[a-zA-Z0-9]+" />
+							<input class="form-control" type="text" placeholder="perspective name" ng-model="ctrl.$scope.$parent.cell.value.perspectiveName" required="required" pattern="[a-zA-Z0-9_-]+" />
 							<span ng-show="ctrl.$scope.$parent.cell.value.perspectiveName === undefined">The perspective name format is not valid!</span>
 						</div>
 					</div>
