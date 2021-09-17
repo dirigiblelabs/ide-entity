@@ -8,13 +8,13 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-exports.getTemplate = function() {
-	var view = {
-			"name":"edm",
-			"label":"Entity Data Model",
-			"extension":"edm",
-			"data":'<model><entities></entities><mxGraphModel><root></root></mxGraphModel></model>',
-			"order": 10
+exports.getTemplate = function () {
+	let view = {
+		"name": "edm",
+		"label": "Entity Data Model",
+		"extension": "edm",
+		"data": '<model><entities></entities><mxGraphModel><root></root></mxGraphModel></model>',
+		"order": 10
 	};
 	return view;
 };

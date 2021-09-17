@@ -8,15 +8,15 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-exports.getEditor = function() {
-	var editor = {
-			"id":"edm",
-			"name":"EDM",
-			"factory":"frame",
-			"region":"center-top",
-			"label":"Entity Data Modeler",
-			"link":"../ide-entity/modeler.html",
-			"contentTypes":["application/entity-data-model+xml"]
+exports.getEditor = function () {
+	let editor = {
+		"id": "edm",
+		"name": "EDM",
+		"factory": "frame",
+		"region": "center-top",
+		"label": "Entity Data Modeler",
+		"link": "../ide-entity/modeler.html",
+		"contentTypes": ["application/entity-data-model+xml"]
 	};
 	return editor;
 }
