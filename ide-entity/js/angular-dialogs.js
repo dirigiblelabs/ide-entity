@@ -528,7 +528,7 @@ angular.module('ui.entity-data.modeler', ['ngAnimate', 'ngSanitize', 'ui.bootstr
 		ctrl.loadModels = function () {
 			return new Promise((resolve, reject) => {
 				const xhr = new XMLHttpRequest();
-				xhr.open('POST', '../../../../services/v4/ide/workspace-find/');
+				xhr.open('POST', '/services/v4/ide/workspace-find/');
 				xhr.setRequestHeader('X-CSRF-Token', 'Fetch');
 				xhr.setRequestHeader('Dirigible-Editor', 'EntityDataModeler');
 				xhr.onload = () => {
@@ -547,7 +547,7 @@ angular.module('ui.entity-data.modeler', ['ngAnimate', 'ngSanitize', 'ui.bootstr
 		ctrl.loadEntities = function () {
 			return new Promise((resolve, reject) => {
 				const xhr = new XMLHttpRequest();
-				xhr.open('GET', '../../../../services/v4/ide/workspaces' + $scope.$parent.referencedModel);
+				xhr.open('GET', '/services/v4/ide/workspaces' + $scope.$parent.referencedModel);
 				xhr.setRequestHeader('X-CSRF-Token', 'Fetch');
 				xhr.setRequestHeader('Dirigible-Editor', 'EntityDataModeler');
 				xhr.onload = () => {
