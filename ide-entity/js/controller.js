@@ -20,6 +20,7 @@ function main(container, outline, toolbar, sidebar, status) {
 
 	let $scope = $('#ModelerCtrl').scope();
 	let csrfToken;
+	let file;
 
 	// Load model file
 	function getResource(resourcePath) {
@@ -40,8 +41,17 @@ function main(container, outline, toolbar, sidebar, status) {
 		console.error('file parameter is not present in the URL');
 	}
 
-	let searchParams = new URLSearchParams(window.location.search);
-	let file = searchParams.get('file');
+	function getViewParameters() {
+		if (window.frameElement.hasAttribute("data-parameters")) {
+			let params = JSON.parse(window.frameElement.getAttribute("data-parameters"));
+			file = params["file"];
+		} else {
+			let searchParams = new URLSearchParams(window.location.search);
+			file = searchParams.get('file');
+		}
+	}
+
+	getViewParameters();
 	let contents = loadContents(file);
 
 	let messageHub = new FramesMessageHub();
