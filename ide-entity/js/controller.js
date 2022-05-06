@@ -494,6 +494,65 @@ function main(container, outline, toolbar, sidebar, status) {
 
 		});
 
+		// Defines a new move up action
+		editor.addAction('moveup', function (editor, cell) {
+
+			if (cell.parent.children.length > 1) {
+				graph.getModel().beginUpdate();
+				try {
+
+					for (index = 0; index < cell.parent.children.length; index++) {
+						let current = cell.parent.children[index];
+						if (cell.id === current.id) {
+							if (index > 0) {
+								let previous = cell.parent.children[index - 1];
+								let y = previous.geometry.y;
+								previous.geometry.y = current.geometry.y;
+								current.geometry.y = y;
+								cell.parent.children[index - 1] = current;
+								cell.parent.children[index] = previous;
+								break;
+							}
+
+						}
+					}
+				} finally {
+					graph.getModel().endUpdate();
+					graph.refresh();
+				}
+			}
+
+		});
+
+		// Defines a new move down action
+		editor.addAction('movedown', function (editor, cell) {
+
+			if (cell.parent.children.length > 2) {
+				graph.getModel().beginUpdate();
+				try {
+
+					for (index = 0; index < cell.parent.children.length; index++) {
+						let current = cell.parent.children[index];
+						if (cell.id === current.id) {
+							if (index < cell.parent.children.length - 1) {
+								let next = cell.parent.children[index + 1];
+								let y = next.geometry.y;
+								next.geometry.y = current.geometry.y;
+								current.geometry.y = y;
+								cell.parent.children[index + 1] = current;
+								cell.parent.children[index] = next;
+								break;
+							}
+						}
+					}
+				} finally {
+					graph.getModel().endUpdate();
+					graph.refresh();
+				}
+			}
+
+		});
+
 		toolbar.appendChild(spacer.cloneNode(true));
 
 		addToolbarButton(editor, toolbar, 'copy', 'Copy', 'copy', true);
