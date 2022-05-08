@@ -189,7 +189,7 @@
                             <div class="row">
                                 <label class="col-xs-3 col-form-label">Icon: </label>
                                 <div class="col-xs-5">
-                                    <select class="form-control" name="perspectiveIcon" id="perspectiveIcon"
+                                    <select class="form-control" name="icon" id="icon"
                                         ng-model="ctrl.$scope.$parent.cell.value.icon"
                                         style="font-family: 'FontAwesome', 'Helvetica'">
                                         <option ng-repeat="option in ctrl.icons" id="{{option.name}}"
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
 
-
+                            <!--
                             <div class="row">
                                 <label class="col-xs-3 col-form-label">Perspective Name: </label>
                                 <div class="col-xs-5">
@@ -243,17 +243,19 @@
                                         perspective name format is not valid!</span>
                                 </div>
                             </div>
+                            -->
                             <div class="row">
-                                <label class="col-xs-3 col-form-label">Perspective Icon: </label>
+                                <label class="col-xs-3 col-form-label">Perspective: </label>
                                 <div class="col-xs-2">
-                                    <select class="form-control" name="perspectiveIcon" id="perspectiveIcon"
-                                        ng-model="ctrl.$scope.$parent.cell.value.perspectiveIcon"
+                                    <select class="form-control" name="perspective" id="perspective"
+                                        ng-model="ctrl.$scope.$parent.cell.value.perspectiveName"
                                         style="font-family: 'FontAwesome', 'Helvetica'">
-                                        <option ng-repeat="option in ctrl.icons" id="{{option.name}}"
-                                            value="{{option.name}}" ng-bind-html="option.icon"></option>
+                                        <option ng-repeat="option in ctrl.availablePerspectives()" id="{{option.id}}"
+                                            value="{{option.id}}" ng-bind-html="option.id"></option>
                                     </select>
                                 </div>
                             </div>
+                            <!--
                             <div class="row">
                                 <label class="col-xs-3 col-form-label">Perspective Order: </label>
                                 <div class="col-xs-3">
@@ -261,6 +263,7 @@
                                         ng-model="ctrl.$scope.$parent.cell.value.perspectiveOrder" required="required">
                                 </div>
                             </div>
+                            -->
 
                         </div>
                     </div>
@@ -935,7 +938,7 @@
         <div class="dirigible-modal modal fade" id="dialogReferEntity" tabindex="-1" role="dialog"
             aria-labelledby="dialogReferEntityLabel" aria-hidden="true">
             <div class="modal-header">
-                <h3>{{$parent.dialogTitle}}</h3>
+                <h3>Entity from External Model</h3>
             </div>
             <div class="modal-body">
 

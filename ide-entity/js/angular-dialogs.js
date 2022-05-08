@@ -633,6 +633,10 @@ angular.module('ui.entity-data.modeler', ['ngAnimate', 'ngSanitize', 'ui.bootstr
 			// $scope.$parent.graph.model.setValue($scope.$parent.cell, connector);
 		};
 
+		ctrl.availablePerspectives = function () {
+			return $scope.$parent.graph.model.perspectives;
+		};
+
 		// Perspectives Management
 		$scope.openPerspectiveNewDialog = function () {
 			$scope.actionType = 'perspectiveNew';
