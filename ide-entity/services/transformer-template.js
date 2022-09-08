@@ -16,14 +16,7 @@ exports.getTemplate = function () {
         "name": "Entity Data to JSON Model Transformer",
         "description": "Model transformer template",
         "extension": "edm",
-        "sources": [
-            {
-                "location": "/ide-entity/template/source.model.template",
-                "action": "generate",
-                "rename": "{{projectName}}.model",
-                "engine": "javascript",
-                "handler": "/ide-entity/template/transformer.js"
-            }],
+        "sources": [],
         "parameters": []
     };
     return template;
