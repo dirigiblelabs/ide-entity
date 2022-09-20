@@ -1,7 +1,7 @@
 # Entity Data Modeler Plugin for Eclipse Dirigible
 
 [![Eclipse License](http://img.shields.io/badge/license-Eclipse-brightgreen.svg)](LICENSE)
-[![GitHub contributors](https://img.shields.io/github/contributors/dirigiblelabs/ide-terminal.svg)](https://github.com/dirigiblelabs/ide-terminal/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/dirigiblelabs/ide-entity.svg)](https://github.com/dirigiblelabs/ide-entity/graphs/contributors)
 
 ## Overview
 
