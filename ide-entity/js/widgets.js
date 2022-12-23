@@ -168,8 +168,8 @@ function configureStylesheet(graph) {
 	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
 	style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-	//style[mxConstants.STYLE_INDICATOR_COLOR] = '#777777';
-	style[mxConstants.STYLE_FONTCOLOR] = '#777777'; // 'var(--modeler-entity-color)';
+	//style[mxConstants.STYLE_INDICATOR_COLOR] = 'var(--sapTextColor)';
+	style[mxConstants.STYLE_FONTCOLOR] = 'var(--sapTextColor)';
 	style[mxConstants.STYLE_FONTSIZE] = '11';
 	style[mxConstants.STYLE_FONTSTYLE] = 0;
 	style[mxConstants.STYLE_SPACING_LEFT] = '4';
@@ -201,8 +201,8 @@ function configureStylesheet(graph) {
 	graph.getStylesheet().putCellStyle('entity', style);
 
 	style = graph.stylesheet.getDefaultEdgeStyle();
-	//style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
-	style[mxConstants.STYLE_LABEL_COLOR] = '#777777';
+	style[mxConstants.STYLE_FONTCOLOR] = 'var(--sapTextColor)';
+	style[mxConstants.STYLE_LABEL_COLOR] = 'var(--sapTextColor)';
 	style[mxConstants.STYLE_STROKECOLOR] = '#0854a0'; // var(--modeler-entity-border)';//'#337ab7';
 	style[mxConstants.STYLE_STROKEWIDTH] = '2';
 	style[mxConstants.STYLE_ROUNDED] = true;
@@ -281,7 +281,7 @@ function configureStylesheet(graph) {
 	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
 	style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-	style[mxConstants.STYLE_FONTCOLOR] = '#777777';
+	style[mxConstants.STYLE_FONTCOLOR] = 'var(--sapTextColor)';
 	style[mxConstants.STYLE_FONTSIZE] = '11';
 	style[mxConstants.STYLE_FONTSTYLE] = 0;
 	style[mxConstants.STYLE_SPACING_LEFT] = '4';
@@ -295,7 +295,7 @@ function configureStylesheet(graph) {
 	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
 	style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-	style[mxConstants.STYLE_FONTCOLOR] = '#777777';
+	style[mxConstants.STYLE_FONTCOLOR] = 'var(--sapTextColor)';
 	style[mxConstants.STYLE_FONTSIZE] = '11';
 	style[mxConstants.STYLE_FONTSTYLE] = 0;
 	style[mxConstants.STYLE_SPACING_LEFT] = '4';
